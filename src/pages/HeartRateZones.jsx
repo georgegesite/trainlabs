@@ -1,29 +1,16 @@
 import { useState } from 'react'
 import './HeartRateZones.css'
-
-/**
- * proCoach Heart Rate Zone Calculation
- * Method: Karvonen / THR (Training Heart Rate) based on HRmax
- *
- * Zones use % of HRmax (not HRR) as proCoach specifies:
- * Zone 1: 50–60%  Recovery
- * Zone 2: 60–70%  Aerobic base (fat burning)
- * Zone 3: 70–80%  Aerobic development (tempo)
- * Zone 4: 80–90%  Anaerobic threshold
- * Zone 5: 90–100% VO2max / Max effort
- */
-
 const ZONES = [
-  { id: 1, label: 'Zone 1', name: 'Recovery',             lo: 0.50, hi: 0.60, color: '#60a5fa', desc: 'Active recovery. Very light effort. Use for warm-up, cool-down, easy days.' },
-  { id: 2, label: 'Zone 2', name: 'Aerobic Base',         lo: 0.60, hi: 0.70, color: '#34d399', desc: 'Fat-burning zone. Conversational effort. Foundation of aerobic fitness.' },
-  { id: 3, label: 'Zone 3', name: 'Aerobic Development',  lo: 0.70, hi: 0.80, color: '#fbbf24', desc: 'Comfortably hard. Tempo / marathon pace effort. Builds aerobic capacity.' },
-  { id: 4, label: 'Zone 4', name: 'Anaerobic Threshold',  lo: 0.80, hi: 0.90, color: '#fb923c', desc: 'Hard effort. Lactate threshold training. Race pace for 10K–half marathon.' },
-  { id: 5, label: 'Zone 5', name: 'VO₂max / Max Effort',  lo: 0.90, hi: 1.00, color: '#f87171', desc: 'Maximum effort. Short intervals. Neuromuscular & VO2max development.' },
+  { id: 1, label: 'Zone 1', name: 'Easy',             lo: 0.68, hi: 0.73, color: '#60a5fa', desc: 'Active recovery. Very light effort. Use for warm-up, cool-down, easy days.' },
+  { id: 2, label: 'Zone 2', name: 'Steady',         lo: 0.73, hi: 0.80, color: '#34d399', desc: 'Fat-burning zone. Conversational effort. Foundation of aerobic fitness.' },
+  { id: 3, label: 'Zone 3', name: 'Moderately Hard',  lo: 0.80, hi: 0.87, color: '#fbbf24', desc: 'Comfortably hard. Tempo / marathon pace effort. Builds aerobic capacity.' },
+  { id: 4, label: 'Zone 4', name: 'Hard',  lo: 0.87, hi: 0.93, color: '#fb923c', desc: 'Hard effort. Lactate threshold training. Race pace for 10K–half marathon.' },
+  { id: 5, label: 'Zone 5', name: 'Max Effort',  lo: 0.93, hi: 1.00, color: '#f87171', desc: 'Maximum effort. Short intervals. Neuromuscular & VO2max development.' },
 ]
 
 function estimateHRmax(age) {
-  // Tanaka formula: HRmax = 208 − 0.7 × age (more accurate than 220-age)
-  return Math.round(208 - 0.7 * age)
+  // Nes (or HUNT) formula : HRmax = 211 − 0.64 × age (more accurate than 220-age)
+  return Math.round(211 - 0.64 * age)
 }
 
 export default function HeartRateZones() {
@@ -55,7 +42,7 @@ export default function HeartRateZones() {
     <div>
       <div className="page-header">
         <h1>Heart Rate Zones</h1>
-        <p>proCoach method — calculates your five training zones based on your maximum heart rate.</p>
+        <p>Use this simple calculator to estimate your heart rate training zones based on your age, or enter your exact maximal heart rate if you know it.</p>
       </div>
 
       <div className="card hr-inputs">

@@ -11,8 +11,8 @@ const NAV_ITEMS = [
   { to: '/',           label: 'Dashboard',       icon: '⬡', end: true },
   { to: '/pace',       label: 'Pace Generator',  icon: '⏱' },
   { to: '/heart-rate', label: 'Heart Rate Zones',icon: '♥' },
-  { to: '/training',   label: 'Training Plan',   icon: '📋' },
   { to: '/tdee',       label: 'TDEE Calculator', icon: '🔥' },
+  { to: '/training',   label: 'Training Plan',   icon: '📋' },
   { to: '/strava',     label: 'Strava Stats',    icon: '⚡' },
 ]
 
@@ -27,7 +27,7 @@ export default function App() {
           <span className="brand-icon">◈</span>
           <div>
             <div className="brand-name">TriPace</div>
-            <div className="brand-sub">Training Hub</div>
+            <div className="brand-sub">Training Laboratory</div>
           </div>
         </div>
 
@@ -50,6 +50,7 @@ export default function App() {
 
         <div className="sidebar-footer">
           <div className="sidebar-footer-text">Built for runners & triathletes</div>
+          <div className="sidebar-footer-text">Created by George Gesite</div>
         </div>
       </aside>
 

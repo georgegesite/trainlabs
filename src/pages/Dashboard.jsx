@@ -13,8 +13,15 @@ const TOOLS = [
     to: '/heart-rate',
     icon: '♥',
     title: 'Heart Rate Zones',
-    desc: 'proCoach THR/HR Max method for personalised aerobic & anaerobic zones.',
+    desc: 'MyProCoach HR Zones for personalised aerobic & anaerobic zones.',
     color: '#f87171',
+  },
+  {
+    to: '/tdee',
+    icon: '🔥',
+    title: 'TDEE Calculator',
+    desc: 'Total Daily Energy Expenditure — fuelling your training and recovery.',
+    color: '#fb923c',
   },
   {
     to: '/training',
@@ -23,13 +30,6 @@ const TOOLS = [
     desc: 'Structured weekly plans tailored to your goal race and fitness level.',
     color: '#fbbf24',
     badge: 'Coming Soon',
-  },
-  {
-    to: '/tdee',
-    icon: '🔥',
-    title: 'TDEE Calculator',
-    desc: 'Total Daily Energy Expenditure — fuelling your training and recovery.',
-    color: '#fb923c',
   },
   {
     to: '/strava',

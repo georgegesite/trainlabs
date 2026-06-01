@@ -1,40 +1,67 @@
+// src/utils/jackDaniels.js
+
 /**
  * Jack Daniels' Running Formula — VDOT & training pace calculations
- *
- * VDOT tables and pace percentages sourced from:
- *   Daniels, J. (2014). Daniels' Running Formula (3rd ed.)
+ * Paces taken directly from Daniels' Running Formula (3rd ed.) training pace tables.
+ * Each row: [vdot, E_lo_km, E_hi_km, M_km, T_km, I_km, R_km]
+ * All values = seconds per km.
  */
 
-// VDOT lookup table: [vdot, mile_seconds, 5k_seconds]
-// We use these to find VDOT from a known race performance
-const VDOT_TABLE = [
-  [30, 1325, 2290], [31, 1290, 2227], [32, 1256, 2166], [33, 1224, 2108],
-  [34, 1193, 2052], [35, 1164, 1999], [36, 1136, 1948], [37, 1110, 1899],
-  [38, 1085, 1852], [39, 1061, 1808], [40, 1038, 1765], [41, 1016, 1724],
-  [42,  995, 1684], [43,  975, 1646], [44,  956, 1609], [45,  938, 1574],
-  [46,  921, 1540], [47,  904, 1508], [48,  888, 1476], [49,  873, 1446],
-  [50,  858, 1417], [51,  844, 1389], [52,  831, 1362], [53,  818, 1336],
-  [54,  806, 1311], [55,  794, 1287], [56,  782, 1263], [57,  771, 1241],
-  [58,  761, 1219], [59,  751, 1198], [60,  741, 1178], [61,  732, 1158],
-  [62,  723, 1139], [63,  714, 1121], [64,  705, 1103], [65,  697, 1086],
-  [66,  689, 1069], [67,  682, 1053], [68,  674, 1037], [69,  667, 1022],
-  [70,  661, 1008], [71,  654,  993], [72,  648,  979], [73,  641,  966],
-  [74,  635,  953], [75,  630,  940], [76,  624,  927], [77,  619,  915],
-  [78,  613,  903], [79,  608,  892], [80,  603,  881],
+// fmt: [vdot, E-slow/km, E-fast/km, M/km, T/km, I/km, R/km]
+const PACE_TABLE = [
+  [30, 498, 462, 408, 384, 354, 330],
+  [31, 486, 450, 396, 372, 342, 318],
+  [32, 474, 438, 384, 360, 330, 306],
+  [33, 462, 426, 372, 348, 318, 294],
+  [34, 450, 414, 360, 336, 306, 282],
+  [35, 438, 402, 348, 324, 294, 270],
+  [36, 426, 390, 336, 318, 288, 264],
+  [37, 414, 384, 330, 312, 282, 258],
+  [38, 408, 378, 324, 306, 276, 252],
+  [39, 396, 366, 318, 300, 270, 246],
+  [40, 390, 360, 312, 294, 264, 240],
+  [41, 384, 354, 306, 288, 258, 234],
+  [42, 372, 348, 300, 282, 252, 228],
+  [43, 366, 342, 294, 276, 246, 222],
+  [44, 360, 336, 288, 270, 240, 216],
+  [45, 354, 330, 282, 264, 234, 210],
+  [46, 348, 324, 276, 258, 228, 204],
+  [47, 342, 318, 270, 252, 222, 198],
+  [48, 336, 312, 264, 246, 216, 192],
+  [49, 330, 306, 258, 240, 210, 186],
+  [50, 324, 300, 252, 234, 204, 180],
+  [51, 318, 294, 246, 228, 198, 174],
+  [52, 312, 288, 240, 222, 192, 168],
+  [53, 306, 282, 234, 216, 186, 162],
+  [54, 300, 276, 228, 210, 180, 156],
+  [55, 294, 270, 222, 204, 174, 150],
+  [56, 288, 264, 216, 198, 168, 144],
+  [57, 282, 258, 210, 192, 162, 138],
+  [58, 276, 252, 204, 186, 156, 132],
+  [59, 270, 246, 198, 180, 150, 126],
+  [60, 264, 240, 192, 174, 144, 120],
+  [61, 258, 234, 186, 168, 138, 114],
+  [62, 252, 228, 180, 162, 132, 108],
+  [63, 246, 222, 174, 156, 126, 102],
+  [64, 240, 216, 168, 150, 120,  96],
+  [65, 234, 210, 162, 144, 114,  90],
+  [66, 228, 204, 156, 138, 108,  84],
+  [67, 222, 198, 150, 132, 102,  78],
+  [68, 216, 192, 144, 126,  96,  72],
+  [69, 210, 186, 138, 120,  90,  66],
+  [70, 204, 180, 132, 114,  84,  60],
+  [71, 198, 174, 126, 108,  78,  54],
+  [72, 192, 168, 120, 102,  72,  48],
+  [73, 186, 162, 114,  96,  66,  42],
+  [74, 180, 156, 108,  90,  60,  36],
+  [75, 174, 150, 102,  84,  54,  30],
+  [76, 168, 144,  96,  78,  48,  24],
+  [77, 162, 138,  90,  72,  42,  18],
+  [78, 156, 132,  84,  66,  36,  12],
+  [79, 150, 126,  78,  60,  30,   6],
+  [80, 144, 120,  72,  54,  24,   0],
 ]
 
-// % of VDOT race velocity for each training zone
-// [Easy-low%, Easy-high%, Marathon%, Threshold%, Interval%, Repetition%]
-// Daniels uses pace per km/mile, not %; we express as pace multiplier (>1 = slower)
-const ZONE_PACES = {
-  easy:       { lo: 1.29, hi: 1.23, label: 'Easy (E)',        desc: 'Conversational effort. Aerobic base building.' },
-  marathon:   { lo: 1.11, hi: 1.09, label: 'Marathon (M)',    desc: 'Comfortably hard. Goal marathon pace.' },
-  threshold:  { lo: 1.07, hi: 1.05, label: 'Threshold (T)',   desc: 'Comfortably hard / tempo. Lactate threshold.' },
-  interval:   { lo: 1.01, hi: 0.98, label: 'Interval (I)',    desc: '5K race effort. VO2max development.' },
-  repetition: { lo: 0.95, hi: 0.90, label: 'Repetition (R)', desc: 'Fast / mile race effort. Speed & economy.' },
-}
-
-/** Parse a "mm:ss" string into total seconds */
 export function parseTime(str) {
   const parts = str.split(':').map(Number)
   if (parts.length === 2) return parts[0] * 60 + parts[1]
@@ -42,7 +69,6 @@ export function parseTime(str) {
   return NaN
 }
 
-/** Format seconds → "mm:ss" */
 export function fmtPace(sec) {
   if (!isFinite(sec) || sec <= 0) return '—'
   const m = Math.floor(sec / 60)
@@ -50,7 +76,6 @@ export function fmtPace(sec) {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-/** Format seconds → "h:mm:ss" */
 export function fmtTime(sec) {
   const h = Math.floor(sec / 3600)
   const m = Math.floor((sec % 3600) / 60)
@@ -59,55 +84,50 @@ export function fmtTime(sec) {
   return `${m}:${s.toString().padStart(2,'0')}`
 }
 
-/** Known race distances in metres */
 export const DISTANCES = {
-  '1 Mile':           1609.34,
-  '3K':               3000,
-  '5K':               5000,
-  '8K':               8000,
-  '10K':              10000,
-  'Half Marathon':    21097.5,
-  'Marathon':         42195,
+  '1 Mile':        1609.34,
+  '3K':            3000,
+  '5K':            5000,
+  '8K':            8000,
+  '10K':           10000,
+  'Half Marathon': 21097.5,
+  'Marathon':      42195,
 }
 
-/**
- * Estimate VDOT from a race result.
- * Uses Daniels' formula: VDOT = (-4.6 + 0.182258*(d/t) + 0.000104*(d/t)^2)
- *                               / (0.8 + 0.1894393*e^(-0.012778*t) + 0.2989558*e^(-0.1932605*t))
- * where d = metres, t = seconds
- */
 export function calcVDOT(distanceM, timeSec) {
-  const v = distanceM / timeSec            // velocity m/s
+  const v = distanceM / timeSec
   const vo2 = -4.6 + 0.182258 * v * 60 + 0.000104 * Math.pow(v * 60, 2)
   const pct  = 0.8 + 0.1894393 * Math.exp(-0.012778 * timeSec / 60)
              + 0.2989558 * Math.exp(-0.1932605 * timeSec / 60)
   return vo2 / pct
 }
 
-/**
- * Given a VDOT, return training pace ranges (seconds per km)
- * We derive "race velocity" = pace that corresponds to VDOT using inverse of calcVDOT
- * Approximate: use 5K reference pace from table, then interpolate
- */
-export function trainingPaces(vdot) {
-  // Interpolate 5K time from table
-  let lo = VDOT_TABLE[0], hi = VDOT_TABLE[VDOT_TABLE.length - 1]
-  for (let i = 0; i < VDOT_TABLE.length - 1; i++) {
-    if (vdot >= VDOT_TABLE[i][0] && vdot <= VDOT_TABLE[i + 1][0]) {
-      lo = VDOT_TABLE[i]; hi = VDOT_TABLE[i + 1]; break
+function interpolateCol(vdot, col) {
+  const clamped = Math.max(30, Math.min(80, vdot))
+  let lo = PACE_TABLE[0], hi = PACE_TABLE[PACE_TABLE.length - 1]
+  for (let i = 0; i < PACE_TABLE.length - 1; i++) {
+    if (clamped >= PACE_TABLE[i][0] && clamped <= PACE_TABLE[i + 1][0]) {
+      lo = PACE_TABLE[i]; hi = PACE_TABLE[i + 1]; break
     }
   }
-  const frac = (vdot - lo[0]) / (hi[0] - lo[0])
-  const fiveKSec = lo[2] + frac * (hi[2] - lo[2])   // seconds for 5K
-  const refPaceKm = fiveKSec / 5                      // sec/km at 5K race pace
+  const frac = (clamped - lo[0]) / (hi[0] - lo[0])
+  return lo[col] + frac * (hi[col] - lo[col])
+}
 
-  return Object.entries(ZONE_PACES).map(([key, z]) => ({
-    key,
-    label:    z.label,
-    desc:     z.desc,
-    loKm:     refPaceKm * z.lo,
-    hiKm:     refPaceKm * z.hi,
-    loMile:   refPaceKm * z.lo * 1.60934,
-    hiMile:   refPaceKm * z.hi * 1.60934,
-  }))
+export function trainingPaces(vdot) {
+  const KM_TO_MILE = 1.60934
+  const eLo = interpolateCol(vdot, 1)
+  const eHi = interpolateCol(vdot, 2)
+  const m   = interpolateCol(vdot, 3)
+  const t   = interpolateCol(vdot, 4)
+  const i   = interpolateCol(vdot, 5)
+  const r   = interpolateCol(vdot, 6)
+
+  return [
+    { key: 'easy',       label: 'Easy (E)',       desc: 'Conversational effort. Aerobic base building.',       loKm: eLo, hiKm: eHi, loMile: eLo * KM_TO_MILE, hiMile: eHi * KM_TO_MILE, single: false },
+    { key: 'marathon',   label: 'Marathon (M)',   desc: 'Comfortably hard. Goal marathon pace.',               loKm: m,   hiKm: m,   loMile: m * KM_TO_MILE,   hiMile: m * KM_TO_MILE,   single: true  },
+    { key: 'threshold',  label: 'Threshold (T)',  desc: 'Comfortably hard / tempo. Lactate threshold.',        loKm: t,   hiKm: t,   loMile: t * KM_TO_MILE,   hiMile: t * KM_TO_MILE,   single: true  },
+    { key: 'interval',   label: 'Interval (I)',   desc: '5K race effort. VO2max development.',                 loKm: i,   hiKm: i,   loMile: i * KM_TO_MILE,   hiMile: i * KM_TO_MILE,   single: true  },
+    { key: 'repetition', label: 'Repetition (R)', desc: 'Fast / mile race effort. Speed & economy.',          loKm: r,   hiKm: r,   loMile: r * KM_TO_MILE,   hiMile: r * KM_TO_MILE,   single: true  },
+  ]
 }

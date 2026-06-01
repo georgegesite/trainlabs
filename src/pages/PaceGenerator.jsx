@@ -31,15 +31,23 @@ export default function PaceGenerator() {
     <div>
       <div className="page-header">
         <h1>Pace Generator</h1>
-        <p>Enter a recent race result to calculate your VDOT and Jack Daniels training paces.</p>
+        <p>
+          Enter a recent race result to calculate your VDOT and Jack Daniels
+          training paces.
+        </p>
       </div>
 
       <div className="pace-inputs card">
         <div className="input-row">
           <div className="input-group">
             <label className="label">Race Distance</label>
-            <select value={distance} onChange={e => setDistance(e.target.value)}>
-              {Object.keys(DISTANCES).map(d => <option key={d}>{d}</option>)}
+            <select
+              value={distance}
+              onChange={(e) => setDistance(e.target.value)}
+            >
+              {Object.keys(DISTANCES).map((d) => (
+                <option key={d}>{d}</option>
+              ))}
             </select>
           </div>
 
@@ -47,16 +55,16 @@ export default function PaceGenerator() {
             <label className="label">Finish Time</label>
             <input
               type="text"
-              placeholder={distance === '1 Mile' ? 'mm:ss' : 'h:mm:ss'}
+              placeholder={distance === "1 Mile" ? "mm:ss" : "h:mm:ss"}
               value={timeInput}
-              onChange={e => setTimeInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && calculate()}
+              onChange={(e) => setTimeInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && calculate()}
             />
           </div>
 
           <div className="input-group">
             <label className="label">Pace Unit</label>
-            <select value={unit} onChange={e => setUnit(e.target.value)}>
+            <select value={unit} onChange={(e) => setUnit(e.target.value)}>
               <option value="km">per km</option>
               <option value="mile">per mile</option>
             </select>
@@ -75,11 +83,15 @@ export default function PaceGenerator() {
           <div className="vdot-display card-sm">
             <div className="label">Estimated VDOT</div>
             <div className="big-num">{vdot}</div>
-            <p className="vdot-note">VDOT represents your current aerobic fitness. Higher = better.</p>
+            <p className="vdot-note">
+              VDOT represents your current aerobic fitness. Higher = better.
+            </p>
           </div>
 
           <div className="card" style={{ marginTop: 16 }}>
-            <div className="label" style={{ marginBottom: 16 }}>Training Pace Zones</div>
+            <div className="label" style={{ marginBottom: 16 }}>
+              Training Pace Zones
+            </div>
             <table className="result-table">
               <thead>
                 <tr>
@@ -91,16 +103,26 @@ export default function PaceGenerator() {
               </thead>
               <tbody>
                 {results.map((z, i) => (
-                  <tr key={z.key} className={`zone-row zone-row-${i + 1}`}>
+                  <tr key={z.key}>
                     <td>
-                      <span className={`zone-pill zone-${i + 1}`}>{z.label}</span>
+                      <span className={`zone-pill zone-${i + 1}`}>
+                        {z.label}
+                      </span>
                     </td>
-                    <td className="mono">
-                      {fmtPace(unit === 'km' ? z.loKm : z.loMile)} /{unit}
-                    </td>
-                    <td className="mono">
-                      {fmtPace(unit === 'km' ? z.hiKm : z.hiMile)} /{unit}
-                    </td>
+                    {z.single ? (
+                      <td className="mono" colSpan={2}>
+                        {fmtPace(unit === "km" ? z.loKm : z.loMile)} /{unit}
+                      </td>
+                    ) : (
+                      <>
+                        <td className="mono">
+                          {fmtPace(unit === "km" ? z.loKm : z.loMile)} /{unit}
+                        </td>
+                        <td className="mono">
+                          {fmtPace(unit === "km" ? z.hiKm : z.hiMile)} /{unit}
+                        </td>
+                      </>
+                    )}
                     <td className="zone-desc">{z.desc}</td>
                   </tr>
                 ))}
@@ -110,5 +132,5 @@ export default function PaceGenerator() {
         </div>
       )}
     </div>
-  )
+  );
 }
