@@ -1,0 +1,192 @@
+.tdee-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.tdee-unit-toggle {
+  display: flex;
+  gap: 8px;
+  background: var(--bg-3);
+  padding: 4px;
+  border-radius: var(--radius);
+  width: fit-content;
+}
+
+.method-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.method-btn.active {
+  background: var(--bg-2);
+  color: var(--accent);
+}
+
+.tdee-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.activity-btn, .goal-btn {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-2);
+  cursor: pointer;
+  padding: 12px 14px;
+  text-align: left;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.activity-btn.active, .goal-btn.active {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  color: var(--text);
+}
+
+.activity-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.activity-desc, .goal-desc {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 3px;
+}
+
+.goal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.goal-btn {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.error-msg {
+  color: var(--danger);
+  font-size: 13px;
+  padding: 8px 12px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: var(--radius);
+}
+
+/* Results */
+.tdee-results {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cal-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.cal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cal-unit {
+  font-size: 16px;
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+.cal-note {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.macro-card {
+  /* inherits .card */
+}
+
+.macro-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.macro-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px;
+  gap: 12px;
+  align-items: center;
+}
+
+.macro-label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.macro-bar-wrap {
+  background: var(--bg-3);
+  border-radius: 99px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.macro-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.macro-grams {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.macro-pct {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-left: 4px;
+}
+
+.macro-footnote {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}

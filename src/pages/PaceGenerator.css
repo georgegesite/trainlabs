@@ -1,0 +1,59 @@
+.pace-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.error-msg {
+  color: var(--danger);
+  font-size: 13px;
+  padding: 8px 12px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: var(--radius);
+}
+
+.vdot-display {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.vdot-note {
+  font-size: 13px;
+  color: var(--text-2);
+  flex: 1;
+}
+
+.zone-pill {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.mono {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.zone-desc {
+  font-size: 12px;
+  color: var(--text-2);
+}

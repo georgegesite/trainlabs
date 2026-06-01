@@ -1,0 +1,143 @@
+.hr-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hr-method-toggle {
+  display: flex;
+  gap: 8px;
+  background: var(--bg-3);
+  padding: 4px;
+  border-radius: var(--radius);
+  width: fit-content;
+}
+
+.method-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.method-btn.active {
+  background: var(--bg-2);
+  color: var(--accent);
+}
+
+.hr-input-row {
+  max-width: 320px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-hint {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.error-msg {
+  color: var(--danger);
+  font-size: 13px;
+  padding: 8px 12px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: var(--radius);
+}
+
+.hr-results {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hrmax-display {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.zones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.zone-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--zc);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 120px 1fr 100px 1fr;
+  gap: 16px;
+  align-items: center;
+  transition: background 0.15s;
+}
+
+.zone-card:hover {
+  background: var(--bg-3);
+}
+
+.zone-number {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.zone-name {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+.zone-bar-wrap {
+  position: relative;
+  height: 8px;
+  background: var(--bg-3);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.zone-bar {
+  position: absolute;
+  height: 100%;
+  border-radius: 99px;
+  opacity: 0.85;
+}
+
+.bpm-range {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  display: block;
+}
+
+.bpm-unit {
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.zone-desc-col {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
